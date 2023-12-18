@@ -1,0 +1,302 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十六宫格游戏</title>
+    <style>
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        #start-button {
+            margin-top: 20px;
+            font-size: 16px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game-board"></div>
+    <button id="start-button">开始</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gameBoard = document.getElementById('game-board');
+            const startButton = document.getElementById('start-button');
+
+            const generateRandomNumber = () => {
+                const randomNumber = Math.random();
+                if (randomNumber < 0.6) {
+                    return 2;
+                } else if (randomNumber < 0.9) {
+                    return 4;
+                } else {
+                    return 8;
+                }
+            };
+
+            const initializeGameBoard = () => {
+                gameBoard.innerHTML = '';
+                for (let i = 0; i < 16; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    gameBoard.appendChild(cell);
+                }
+            };
+
+            const placeRandomNumbers = () => {
+                const cells = document.querySelectorAll('.cell');
+                const randomIndex1 = Math.floor(Math.random() * 16);
+                let randomIndex2;
+                do {
+                    randomIndex2 = Math.floor(Math.random() * 16);
+                } while (randomIndex1 === randomIndex2);
+
+                cells[randomIndex1].textContent = generateRandomNumber();
+                cells[randomIndex2].textContent = generateRandomNumber();
+            };
+
+            startButton.addEventListener('click', () => {
+                initializeGameBoard();
+                placeRandomNumbers();
+            });
+
+            // 初始显示一个不带数据的九宫格
+            initializeGameBoard();
+        });
+    </script>
+
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十六宫格游戏</title>
+    <style>
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        #start-button {
+            margin-top: 20px;
+            font-size: 16px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game-board"></div>
+    <button id="start-button">开始</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gameBoard = document.getElementById('game-board');
+            console.log("%c Line:130 🥤 gameBoard", "color:#33a5ff", gameBoard);
+            const startButton = document.getElementById('start-button');
+
+            const generateRandomNumber = () => {
+                const randomNumber = Math.random();
+                if (randomNumber < 0.6) {
+                    return 2;
+                } else if (randomNumber < 0.9) {
+                    return 4;
+                } else {
+                    return 8;
+                }
+            };
+
+            const initializeGameBoard = () => {
+                gameBoard.innerHTML = '';
+                for (let i = 0; i < 16; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    gameBoard.appendChild(cell);
+                }
+            };
+
+            const placeRandomNumbers = () => {
+                const cells = document.querySelectorAll('.cell');
+                const randomIndex1 = Math.floor(Math.random() * 16);
+                let randomIndex2;
+                do {
+                    randomIndex2 = Math.floor(Math.random() * 16);
+                } while (randomIndex1 === randomIndex2);
+
+                cells[randomIndex1].textContent = generateRandomNumber();
+                cells[randomIndex2].textContent = generateRandomNumber();
+            };
+
+            const moveAndMerge = () => {
+                // const cells = document.querySelectorAll('.cell');
+                // let cellsArr = Array.from(cells);
+                // cellsArr.forEach((item, index) => {
+                //     if (item.innerText !== '') {
+                //         // console.log(item.innerText)
+                //         // console.log(index + 1)
+                //         let getIndex = index + 1;
+
+                //         switch (derection) {
+
+                //             case 'up':
+                //                 let integer = Math.ceil(getIndex / 4)//1,2,3,获取上面的几个空格
+                //                 for (i = 1; i < integer; i++) {
+                //                     // if (getIndex <= 4) {
+                //                     //     let getIndexGap = getIndex//
+                //                     // } else {
+
+                //                     // }
+                //                     let getIndexGap = getIndex % 4//获取最远的那个基础值
+                //                     if (cellsArr[getIndexGap].innerHTML === '') {
+                //                         cellsArr[getIndexGap].innerHTML = item.innerText//将
+                //                     }
+                //                     else {
+                //                         let getIndexGap = getIndexGap + 4;
+                //                         if (cellsArr[getIndexGap].innerHTML === '') {
+                //                             cellsArr[getIndexGap].innerHTML = item.innerText//将
+                //                         }
+                //                     }
+                //                 }
+                //                 break;
+                //             case 'down':
+
+                //                 let integerDown = Math.ceil((16 - getIndex) / 4)//获取下面的格数
+                //                 for (i = 1; i < integer; i++) {
+
+                //                     let getIndexDown = 12 + getIndex % 4;//获取最下面的值
+                //                     if (cellsArr[getIndexDown].innerHTML === '') {
+                //                         cellsArr[getIndexDown].innerHTML = item.innerText//将
+                //                     } else {
+                //                         let getIndexDown = getIndexDown - 4;
+                //                         if (cellsArr[getIndexGap].innerHTML === '') {
+                //                             cellsArr[getIndexGap].innerHTML = item.innerText
+                //                         }
+                //                     }
+
+                //                 }
+                //                 break
+
+
+
+
+
+                //         }
+                //     }
+                //     // const move=function(){
+
+                //     // }
+                // })
+
+                const getIndex = (row, col) => row * 4 + col;
+
+                const move = () => {
+                    for (let i = 0; i < cells.length; i++) {
+                        const currentCell = cells[i];
+                        let currentValue = parseInt(currentCell.textContent);
+
+                        if (!isNaN(currentValue)) {
+                            let newRow, newCol;
+
+                            switch (direction) {
+                                case 'up':
+                                    newRow = Math.floor(i / 4) - 1;
+                                    newCol = i % 4;
+                                    break;
+                                case 'down':
+                                    newRow = Math.floor(i / 4) + 1;
+                                    newCol = i % 4;
+                                    break;
+                                case 'left':
+                                    newRow = Math.floor(i / 4);
+                                    newCol = (i % 4) - 1;
+                                    break;
+                                case 'right':
+                                    newRow = Math.floor(i / 4);
+                                    newCol = (i % 4) + 1;
+                                    break;
+                            }
+
+                            const newIndex = getIndex(newRow, newCol);
+                            const newCell = cells[newIndex];
+
+                            if (newCell && newCell.textContent === '') {
+                                newCell.textContent = currentValue;
+                                currentCell.textContent = '';
+                            } else if (newCell && newCell.textContent == currentValue) {
+                                newCell.textContent = currentValue * 2;
+                                currentCell.textContent = '';
+                            }
+                        }
+                    }
+                };
+
+                move();
+
+                placeRandomNumbers();
+            };
+
+            startButton.addEventListener('click', () => {
+                initializeGameBoard();
+                placeRandomNumbers();
+                moveAndMerge()
+            });
+
+            initializeGameBoard();
+
+            document.addEventListener('keydown', (event) => {
+                switch (event.key) {
+                    case 'ArrowUp':
+                        moveAndMerge('up');
+                        break;
+                    case 'ArrowDown':
+                        moveAndMerge('down');
+                        break;
+                    case 'ArrowLeft':
+                        moveAndMerge('left');
+                        break;
+                    case 'ArrowRight':
+                        moveAndMerge('right');
+                        break;
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
