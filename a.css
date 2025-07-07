@@ -1,90 +1,62 @@
-* {
-  padding: 0px;
-  margin: 0px;
+.whole {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-body {
-  position: relative;
+
+.gameName {
+    color: #7e7931;
+    font-size: 50px;
+    font-weight: bolder;
+    text-align: center;
 }
-ul {
-  padding: 0px;
-  margin: 0px;
-  list-style: none;
-  display: flex;
-  justify-content: space-around;
+
+.scoreEvaluate {
+    display: flex;
+    width: 500px;
 }
-ul li {
-  font-size: 40px;
-  background-color: rgba(231, 222, 197, 0.89);
-  margin: 5px;
-  height: 100px;
-  width: 100px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bolder;
-  color: #494949;
-  animation: changeM 0.3s;
+
+.common {
+    flex: 1;
+    background-color: #b19d79;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
-.box {
-  background-color: #bbada0;
-  width: 440px;
-  border-radius: 10px;
-  margin: 0 auto;
+
+.score {
+    font-size: 60px;
+    color: white;
 }
-button {
-  border-radius: 10px;
-  font-size: 20px;
-  width: 150px;
-  font-weight: bolder;
-  background-color: coral;
-  height: 50px;
-  margin: 10px auto;
-  display: block;
-  color: #fff;
+
+.history-best {
+    font-size: 60px;
+    color: white;
 }
-.header {
-  width: 500px;
-  margin: 0 auto;
+.new-game{
+    height: 50px;
+    width: 150px;
+    color: white;
+    background-color: rgb(151, 98, 79);
+    border-radius: 10px;
+    border: 1px solid black;
 }
-.header > p {
-  font-size: 50px;
-  font-weight: bolder;
-  color: #7e7931;
-  text-align: center;
+.nine-grid{
+    margin-top: 20px;
+    width: 330px;
+    flex-wrap: wrap;
+    display: flex;
+    /* justify-content: space-around; */
+    flex-direction: row;
+    background-color: #bbada0;
 }
-.score-container {
-  width: 500px;
-  display: flex;
-}
-.score-container .left {
-  flex: 1;
-  margin: 10px;
-  border-radius: 10px;
-  background-color: #b19d79;
-  position: relative;
-}
-.score-container .left .addScore {
-  position: absolute;
-  left: 120px;
-  top: 20px;
-  font-size: 40px;
-  color: #ffe600;
-  display: none;
-}
-.score-container .right {
-  flex: 1;
-  border-radius: 10px;
-  margin: 10px;
-  background-color: #b19d79;
-}
-.score-container p {
-  font-size: 20px;
-  text-align: center;
-  padding-top: 10px;
-}
-.score-container .score {
-  text-align: center;
-  font-size: 60px;
-  color: white;
+.square{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-color: rgba(231, 222, 197, 0.89);
+    border-radius: 10px;
 }
