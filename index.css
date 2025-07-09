@@ -36,7 +36,8 @@
     font-size: 60px;
     color: white;
 }
-.new-game{
+
+.new-game {
     height: 50px;
     width: 150px;
     color: white;
@@ -44,7 +45,8 @@
     border-radius: 10px;
     border: 1px solid black;
 }
-.nine-grid{
+
+.nine-grid {
     margin-top: 20px;
     width: 330px;
     flex-wrap: wrap;
@@ -53,10 +55,14 @@
     flex-direction: row;
     background-color: #bbada0;
 }
-.square{
+
+.square {
     width: 100px;
     height: 100px;
     margin: 5px;
     background-color: rgba(231, 222, 197, 0.89);
     border-radius: 10px;
 }
+ .squareTwo {
+        background-color: rgba(213, 194, 142, 0.89);
+    }

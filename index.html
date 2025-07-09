@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2048小游戏</title>
     <link rel="stylesheet" href="./index.css">
+  
 </head>
 <body>
     <div class="whole">
@@ -18,11 +19,10 @@
             </div>
         </div>
         <div>
-            <button class="new-game">newGame</button>
+            <button class="new-game" id="gameStart">newGame</button>
         </div>
         <div class="nine-grid">
-            <div class="square">4</div>
-            <div class="square">4</div>
+            <div class="square" id="square-val"></div>
             <div class="square"></div>
             <div class="square"></div>
             <div class="square"></div>
@@ -30,8 +30,9 @@
             <div class="square"></div>
             <div class="square"></div>
             <div class="square"></div>
-
+            <div class="square"></div>
         </div>
     </div>
+      <script src="./index.js"></script>
 </body>
 </html>
