@@ -84,66 +84,75 @@ document.addEventListener('keydown', (event) => {
     }
     let moveCount = 3
     const afterMoveArr = []
+    //他可以上移动
     switch (key) {
         case 'ArrowUp':
             console.log('按下上方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
-                moveCount=3
-                while (moveCount--) {
-                    if (squareHaveMap.has(squareHaveNum[i]-4) || squareHaveNum[i] <= 3 ) {
-                       
+                moveCount = Math.floor(squareHaveNum[i] / 4)//2 3
+                console.log("%c Line:93 🥝 moveCount", "color:#ed9ec7", moveCount);
+                // debugger
+                while (moveCount > 0) {
+                    if (squareHaveMap.has(squareHaveNum[i] - 4) || squareHaveNum[i] <= 3) {
                         break
                     }
-                    console.log("%c Line:99 🥓 squareHaveNum[i]- 4", "color:#3f7cff", squareHaveNum[i]- 4);
+                    squareHaveMap.set()
+                    moveCount--
                 }
-                    const finalIndex=squareHaveNum[i]- (3-moveCount)*4
-                    afterMoveArr.push(finalIndex)
+                const finalIndex = squareHaveNum[i] - (Math.floor(squareHaveNum[i] / 4)-moveCount) * 4
+                afterMoveArr.push(finalIndex)
 
             }
             break;
         case 'ArrowDown':
             console.log('按下下方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
-                moveCount=3
-                while (moveCount--) {
+                moveCount = 3-Math.floor(squareHaveNum[i] / 4)
+                while (moveCount > 0) {
                     if (squareHaveMap.has(squareHaveNum[i] + 4) || squareHaveNum[i] >= 12) {
                         afterMoveArr.push(squareHaveNum[i])
-                         break
+                        break
                     }
-                    afterMoveArr.push(squareHaveNum[i] + 4)
+                    moveCount--
                 }
+                const finalIndex = squareHaveNum[i] + ( 3-Math.floor(squareHaveNum[i] / 4)- moveCount) * 4
+                afterMoveArr.push(finalIndex)
             }
             break;
         case 'ArrowLeft':
             console.log('按下左方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
-                moveCount=3
-                while (moveCount--) {
+                moveCount = squareHaveNum[i]%4
+                while (moveCount>0) {
                     if (squareHaveMap.has(squareHaveNum[i] - 1) || squareHaveNum[i] % 4 === 0) {
                         afterMoveArr.push(squareHaveNum[i])
                         break
                     }
-                    afterMoveArr.push(squareHaveNum[i] - 1)
+                    moveCount--
                 }
+                const finalIndex = squareHaveNum[i] - (squareHaveNum[i]%4 - moveCount) * 1
+                afterMoveArr.push(finalIndex)
+
             }
 
             break;
         case 'ArrowRight':
             for (let i = 0; i < squareHaveNum.length; i++) {
-                moveCount=3
-                while (moveCount--) {
+                moveCount = 3-(squareHaveNum[i]%4)
+                while (moveCount>0) {
                     if (squareHaveMap.has(squareHaveNum[i] + 1) || squareHaveNum[i] % 4 === 3 || squareHaveNum[i] === 0) {
                         afterMoveArr.push(squareHaveNum[i])
                         break
+                    }
+                    moveCount--
                 }
-                   afterMoveArr.push(squareHaveNum[i] + 1)
+                const finalIndex = squareHaveNum[i] + (3-(squareHaveNum[i]%4)- moveCount) * 1
+                afterMoveArr.push(finalIndex)
             }
             break;
     }
-}
     console.log("%c Line:133 🍡 最中的squareHaveNum", "color:#93c0a4", squareHaveNum);
     console.log("%c Line:134 🥪 afterMoveArr", "color:#4fff4B", afterMoveArr);
-
 
 });
 
