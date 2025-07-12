@@ -86,23 +86,27 @@ document.addEventListener('keydown', (event) => {
     }
     let moveCount = 3
     const afterMoveArr = []
-    const mapArr = Array.from(squareHaveMap)//
+    // const mapArr = Array.from(squareHaveMap)//
     //现在我要处理的是将每次移动位置都将这个值更改，
     switch (key) {
         case 'ArrowUp':
             console.log('按下上方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
                 moveCount = Math.floor(squareHaveNum[i] / 4)//2 3
-                console.log("%c Line:93 🥝 moveCount", "color:#ed9ec7", moveCount);
                 // debugger
                 while (moveCount > 0) {
-                    console.log("%c Line:99 🍏 mapArr", "color:#fca650", mapArr);
-                    const nextSquareIndex = mapArr[i] - 4//只判断了当前值的下一个，我要判断的是每次的下一个
+                    const mapArr = Array.from(squareHaveMap)//
+                    const nextSquareIndex = mapArr[i][0] - 4//只判断了当前值的下一个，我要判断的是每次的下一个
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] <= 3) {
                         break
                     }
-                    squareHaveMap.set(nextSquareIndex, squareHaveMap.get(squareHaveNum[i]))//将这个位置的下一个位置放进map,
-                    squareHaveMap.delete(squareHaveNum[i])//删除当前的索引的位置,
+                    mapArr[i] = [nextSquareIndex, squareHaveMap.get(squareHaveNum[i])]
+                    squareHaveMap.clear();
+                    mapArr.forEach(([key, value]) => {
+                        squareHaveMap.set(key, value);
+                    });
+                    // squareHaveMap.set(nextSquareIndex, squareHaveMap.get(squareHaveNum[i]))//将这个位置的下一个位置放进map,他是最后一个进去的所以第一个，栈，先进后出，很重要
+                    // squareHaveMap.delete(mapArr[i])//删除当前的索引的位置,这一段代码错了，
                     moveCount--
                 }
                 const finalIndex = squareHaveNum[i] - (Math.floor(squareHaveNum[i] / 4) - moveCount) * 4
@@ -115,14 +119,17 @@ document.addEventListener('keydown', (event) => {
             for (let i = 0; i < squareHaveNum.length; i++) {
                 moveCount = 3 - Math.floor(squareHaveNum[i] / 4)
                 while (moveCount > 0) {
-
-                    const nextSquareIndex = mapArr[i] + 4//下个位置的索引
+                    const mapArr = Array.from(squareHaveMap)//
+                    const nextSquareIndex = mapArr[i][0] + 4//下个位置的索引
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] >= 12) {
                         afterMoveArr.push(squareHaveNum[i])
                         break
                     }
-                    squareHaveMap.set(nextSquareIndex, squareHaveMap.get(squareHaveNum[i]))//将这个位置的下一个位置放进map,
-                    squareHaveMap.delete(squareHaveNum[i])//删除当前的索引的位置,
+                    mapArr[i] = [nextSquareIndex, squareHaveMap.get(squareHaveNum[i])]
+                    squareHaveMap.clear();
+                    mapArr.forEach(([key, value]) => {
+                        squareHaveMap.set(key, value);
+                    });
                     moveCount--
                 }
                 const finalIndex = squareHaveNum[i] + (3 - Math.floor(squareHaveNum[i] / 4) - moveCount) * 4
@@ -134,13 +141,17 @@ document.addEventListener('keydown', (event) => {
             for (let i = 0; i < squareHaveNum.length; i++) {
                 moveCount = squareHaveNum[i] % 4
                 while (moveCount > 0) {
-                    const nextSquareIndex = mapArr[i] - 1
+                    const mapArr = Array.from(squareHaveMap)//
+                    const nextSquareIndex = mapArr[i][0] - 1
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] % 4 === 0) {
                         afterMoveArr.push(squareHaveNum[i])
                         break
                     }
-                    squareHaveMap.set(nextSquareIndex, squareHaveMap.get(squareHaveNum[i]))//将这个位置的下一个位置放进map,
-                    squareHaveMap.delete(squareHaveNum[i])//删除当前的索引的位置,
+                    mapArr[i] = [nextSquareIndex, squareHaveMap.get(squareHaveNum[i])]
+                    squareHaveMap.clear();
+                    mapArr.forEach(([key, value]) => {
+                        squareHaveMap.set(key, value);
+                    });
                     moveCount--
                 }
                 const finalIndex = squareHaveNum[i] - (squareHaveNum[i] % 4 - moveCount) * 1
@@ -153,13 +164,17 @@ document.addEventListener('keydown', (event) => {
             for (let i = 0; i < squareHaveNum.length; i++) {
                 moveCount = 3 - (squareHaveNum[i] % 4)//向右可移动的最大次数
                 while (moveCount > 0) {
-                    const nextSquareIndex = mapArr[i] + 1
+                    const mapArr = Array.from(squareHaveMap)//
+                    const nextSquareIndex = mapArr[i][0] + 1
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] % 4 === 3) {
                         afterMoveArr.push(squareHaveNum[i])
                         break
                     }
-                    squareHaveMap.set(nextSquareIndex, squareHaveMap.get(squareHaveNum[i]))//将这个位置的下一个位置放进map,
-                    squareHaveMap.delete(squareHaveNum[i])//删除当前的索引的位置,
+                    mapArr[i] = [nextSquareIndex, squareHaveMap.get(squareHaveNum[i])]
+                    squareHaveMap.clear();
+                    mapArr.forEach(([key, value]) => {
+                        squareHaveMap.set(key, value);
+                    });
                     moveCount--
                 }
                 const finalIndex = squareHaveNum[i] + (3 - (squareHaveNum[i] % 4) - moveCount) * 1
