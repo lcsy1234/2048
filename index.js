@@ -7,8 +7,17 @@ const numberColorMap = {
     32: 'num-32',
     64: 'num-64',
     128: 'num-128',
-    256: 'num-256'
+    256: 'num-256',
+    512: 'num-512',
+    1024: 'num-1024',
+    2048: 'num-2048'
 };
+// const enumValue=[2,]
+// const enumColor=[
+//   '#eee4da', '#ede0c8', '#f2b179', '#f59563', 
+//   '#f67c5f', '#f65e3b', '#edcf72', '#edcc61', 
+//   '#edc850', '#edc53f', '#edc22e'
+// ]
 const squareParent = document.getElementById('parent')
 const gameStart = document.getElementById("gameStart")
 // 点击事件
@@ -42,7 +51,7 @@ function randomTwoIndexArr(n, arr) {
     console.log([randomIndexOne, randomIndextwo])
     return [randomIndexOne, randomIndextwo]
 }
-//随机生成数
+//随机生成数//
 function randownGenerate() {
     const randomVal = [2, 4]
     let randomStart = randomVal[Math.floor(Math.random() * 2)]
@@ -55,27 +64,28 @@ function randownGenerate() {
 //得到宫格中的空值
 //移动要完成两个功能，首先要移动之后看空格中的数字，逻辑（
 //移动数字，
-// function moveClick() {
-
-//     const gameingArr = []
-//     for (let i = 0; i < 16; i++) {
-//         const child = squareParent.children[i]
-//         if (child === null || child === undefined) {
-//             gameingArr.push(i)
-//         }
-//     }
-//     const gamingRandom = randomTwoIndexArr(gameingArr.length, gameingArr)
-//     //问题是randomStartTwo这个能够再一次执行随机数吗
-//     squareParent.children[gamingRandom[0]].appendChild(randownGenerate())
-//     squareParent.children[gamingRandom[1]].appendChild(randownGenerate())
-// }
+function moveAddRandom(arr, map) {
+    const gamingMove = []
+    for (let i = 0; i < 16; i++) {
+        const child = squareParent.children[i]
+        if (!child.hasChildNodes()) {
+            gamingMove.push(i)
+        }
+    }
+    const gamingRandom = randomTwoIndexArr(gamingMove.length, gamingMove)
+    const firstRandomSquare = squareParent.children[gamingRandom[0]]
+    firstRandomSquare.appendChild(randownGenerate())
+    arr.push(gamingRandom[0])
+    map.set(gamingRandom[0], firstRandomSquare.children[0].innerText)
+}
+//现在要完成的就是点击直接生成两个新的带有子节点的，这个时候需要定义一个全局的div数组索引
+//
 document.addEventListener('keydown', (event) => {
     // 获取按键信息
     const key = event.key; // 按键名称（如 "ArrowUp", "a", "Enter"）
-    //   const code = event.code; // 按键代码（如 "ArrowUp", "KeyA", "Enter"）
-    // const squareHaveNum = document.querySelectorAll('.square-num')
-    const squareHaveNum = []
+    const squareHaveNum = []//全局的索引值待会儿可以一封装成全局获取索引的一个函数
     const squareHaveMap = new Map()
+
     for (let i = 0; i < 16; i++) {
         if (squareParent.children[i].hasChildNodes()) {
             const val = squareParent.children[i].children[0].innerText
@@ -84,6 +94,9 @@ document.addEventListener('keydown', (event) => {
             squareHaveMap.set(i, val)//将有值的索引存起来，存他的值应该
         }
     }
+
+    console.log("%c Line:77 🍑 squareHaveNum", "color:#ed9ec7", squareHaveNum);
+    console.log("%c Line:79 🍕 squareHaveMap", "color:#93c0a4", squareHaveMap);
     let moveCount = 3
     const afterMoveArr = []
     // const mapArr = Array.from(squareHaveMap)//
@@ -92,15 +105,18 @@ document.addEventListener('keydown', (event) => {
         case 'ArrowUp':
             console.log('按下上方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
+                squareHaveNum.sort((a, b) => a - b)
                 moveCount = Math.floor(squareHaveNum[i] / 4)//2 3
                 // debugger
                 while (moveCount > 0) {
                     const mapArr = Array.from(squareHaveMap)//
+                    console.log("%c Line:113 🥤 mapArr", "color:#2eafb0", mapArr);
+                    mapArr.sort((a, b) => a[0] - b[0])
                     const nextSquareIndex = mapArr[i][0] - 4//只判断了当前值的下一个，我要判断的是每次的下一个
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] <= 3) {
                         break
                     }
-                    mapArr[i] = [nextSquareIndex, squareHaveMap.get(squareHaveNum[i])]
+                    mapArr[i] = [nextSquareIndex, squareHaveMap.get(squareHaveNum[i])]//
                     squareHaveMap.clear();
                     mapArr.forEach(([key, value]) => {
                         squareHaveMap.set(key, value);
@@ -111,16 +127,18 @@ document.addEventListener('keydown', (event) => {
                 }
                 const finalIndex = squareHaveNum[i] - (Math.floor(squareHaveNum[i] / 4) - moveCount) * 4
                 afterMoveArr.push(finalIndex)
-
             }
             break;
         case 'ArrowDown':
             console.log('按下下方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
-                moveCount = 3 - Math.floor(squareHaveNum[i] / 4)
+                squareHaveNum.sort((a, b) => b - a)
+                moveCount = 3 - Math.floor(squareHaveNum[i] / 4)//
+                //  debugger
                 while (moveCount > 0) {
                     const mapArr = Array.from(squareHaveMap)//
-                    const nextSquareIndex = mapArr[i][0] + 4//下个位置的索引
+                    mapArr.sort((a, b) => b[0] - a[0])
+                    const nextSquareIndex = mapArr[i][0] + 4//下个位置的索引 假如是
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] >= 12) {
                         afterMoveArr.push(squareHaveNum[i])
                         break
@@ -139,9 +157,11 @@ document.addEventListener('keydown', (event) => {
         case 'ArrowLeft':
             console.log('按下左方向键');
             for (let i = 0; i < squareHaveNum.length; i++) {
+                squareHaveNum.sort((a, b) => a - b)
                 moveCount = squareHaveNum[i] % 4
                 while (moveCount > 0) {
                     const mapArr = Array.from(squareHaveMap)//
+                    mapArr.sort((a, b) => a[0] - b[0])
                     const nextSquareIndex = mapArr[i][0] - 1
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] % 4 === 0) {
                         afterMoveArr.push(squareHaveNum[i])
@@ -162,9 +182,11 @@ document.addEventListener('keydown', (event) => {
             break;
         case 'ArrowRight':
             for (let i = 0; i < squareHaveNum.length; i++) {
+                squareHaveNum.sort((a, b) => b - a)//解决谁先移动的问题
                 moveCount = 3 - (squareHaveNum[i] % 4)//向右可移动的最大次数
                 while (moveCount > 0) {
                     const mapArr = Array.from(squareHaveMap)//
+                    mapArr.sort((a, b) => b[0] - a[0])
                     const nextSquareIndex = mapArr[i][0] + 1
                     if (squareHaveMap.has(nextSquareIndex) || squareHaveNum[i] % 4 === 3) {
                         afterMoveArr.push(squareHaveNum[i])
@@ -181,7 +203,14 @@ document.addEventListener('keydown', (event) => {
                 afterMoveArr.push(finalIndex)
             }
             break;
+
     }
+    // for(let i=0;i<16;i++){
+    //     squareParent.children[i].children[0].innerText=''
+    // }
+    // afterMoveArr.forEach((key,index)=>{ squareParent.children[index].children[0].appendChild()})
+    moveAddRandom(afterMoveArr, squareHaveMap)//向空的宫格里添加新的div
+    console.log("%c Line:212 🍖 squareHaveMap", "color:#f5ce50", squareHaveMap);
     console.log("%c Line:133 🍡 最中的squareHaveNum", "color:#93c0a4", squareHaveNum);
     console.log("%c Line:134 🥪 afterMoveArr", "color:#4fff4B", afterMoveArr);
 });

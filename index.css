@@ -69,7 +69,7 @@
     height: 100px;
     display: flex;
     justify-content: center;
-    align-items: center;  
+    align-items: center;
     border-radius: 10px;
     font-size: 50px;
 }
@@ -107,4 +107,16 @@
 
 .num-256 {
     background-color: #edcc61;
+}
+
+.num-512 {
+    background-color: #ed61da;
+}
+
+.num-1024 {
+    background-color: #4841a6;
+}
+
+.num-2048 {
+    background-color: #460303;
 }
