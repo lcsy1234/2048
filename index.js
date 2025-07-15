@@ -76,7 +76,7 @@ function moveAddRandom(arr, map) {
     const firstRandomSquare = squareParent.children[gamingRandom[0]]
     firstRandomSquare.appendChild(randownGenerate())
     arr.push(gamingRandom[0])
-    map.set(gamingRandom[0], firstRandomSquare.children[0].innerText)
+    map.set(gamingRandom[0], Number(firstRandomSquare.children[0].innerText))
 }
 //现在要完成的就是点击直接生成两个新的带有子节点的，这个时候需要定义一个全局的div数组索引
 //
@@ -89,19 +89,20 @@ document.addEventListener('keydown', (event) => {
 
     for (let i = 0; i < 16; i++) {
         if (squareParent.children[i].hasChildNodes()) {
-            const val = squareParent.children[i].children[0].innerText
+            const val = Number(squareParent.children[i].children[0].innerText)
             console.log("%c Line:82 🍣 val", "color:#4fff4B", val);
             beforeNums.push(i)
             beforeMap.set(i, val)//将有值的索引存起来，存他的值应该
             afterMap.set(i, val);
         }
     }
-    const beforeNumsLen= beforeNums.length
+    const beforeNumsLen = beforeNums.length
 
     console.log("%c Line:77 🍑 beforeNums", "color:#ed9ec7", beforeNums);
     console.log("%c Line:79 🍕 beforeMap", "color:#93c0a4", beforeMap);
     let moveCount = 3
     const afterMoveNums = [];
+    let isAgrrate = false
     // const mapArr = Array.from(beforeMap)//
     //现在我要处理的是将每次移动位置都将这个值更改，
     console.log("%c Line:107 🌰 key", "color:#465975", key);
@@ -111,102 +112,132 @@ document.addEventListener('keydown', (event) => {
             console.log('按下上方向键');
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3;
+                // debugger
                 let tempIndex = beforeNums[i]; // 移动的临时坐标
                 while (moveCount > 0) {
                     tempIndex = tempIndex - 4;
                     if (afterMap.has(tempIndex) || tempIndex < 0) {
+                        //下一个位置的值等与当前位置的值
+                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                            //beforeVal要变成2倍
+                            isAgrrate = true
+                            moveCount--
+                        }
                         break;
                     }
                     moveCount--;
                 }
                 const finalIndex = beforeNums[i] - ((3 - moveCount) * 4); // 最终坐标
-                const beforeVal = beforeMap.get(beforeNums[i]);
-                afterMap.delete(beforeNums[i]); // 删除之前的坐标
-                afterMap.set(finalIndex, beforeVal); // 记录最终坐标
-                afterMoveNums.push(finalIndex);
+                //获取原始值
+                const startVal = Number(beforeMap.get(beforeNums[i]))
+                const beforeVal = isAgrrate ? 2 * startVal : startVal
+                // 删除之前的位置，因为已经不需要之前的位置了
+                afterMap.delete(beforeNums[i]);
+                // 记录最终坐标以及值
+                afterMap.set(finalIndex, beforeVal);
+                //可以去重也可以根据isAgrrate来判断,不重复push重复的位置
+                isAgrrate ? isAgrrate = false : afterMoveNums.push(finalIndex)
             }
             break;
         case 'ArrowDown':
             console.log('按下下方向键');
-            beforeNums.sort((a, b) => b-a)
+            beforeNums.sort((a, b) => b - a)
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3
-                let nextSquareIndex= beforeNums[i]
+                let tempIndex = beforeNums[i]
 
                 while (moveCount > 0) {
-                     nextSquareIndex = nextSquareIndex + 4//直接记录了当前的位置
-                    if (afterMap.has(nextSquareIndex) || nextSquareIndex>=16) {
+                    tempIndex = tempIndex + 4//直接记录了当前的位置
+                    if (afterMap.has(tempIndex) || tempIndex >= 16) {
+                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                            isAgrrate = true
+                            moveCount--
+                        }
                         break
                     }
                     moveCount--
                 }
                 const finalIndex = beforeNums[i] + (3 - moveCount) * 4
-                console.log("%c Line:143 🌽 finalIndex movedown", "color:#2eafb0", finalIndex);
-                // const beforeVal = 
-                afterMoveNums.push(finalIndex)
+                const startVal = Number(beforeMap.get(beforeNums[i]))
+                const beforeVal = isAgrrate ? 2 * startVal : startVal
+                isAgrrate ? isAgrrate = false : afterMoveNums.push(finalIndex)
                 afterMap.delete(beforeNums[i])
-                afterMap.set(finalIndex,beforeMap.get(beforeNums[i]))
+                afterMap.set(finalIndex, beforeVal)
                 console.log("%c Line:147 🍏 afterMoveNums movedown", "color:#b03734", afterMoveNums);
             }
             break;
         case 'ArrowLeft':
             console.log('按下左方向键');
-          for (let i = 0; i < beforeNumsLen; i++) {
+            for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3;
                 let tempIndex = beforeNums[i]; // 移动的临时坐标
-                let leftCase=Math.floor(beforeNums[i]/4)*4
+                let leftCase = Math.floor(beforeNums[i] / 4) * 4
                 console.log("%c Line:159 🌮 leftCase", "color:#ed9ec7", leftCase);
+                //上移遇到值就直接跳出，如果合并就不能跳出，
                 while (moveCount > 0) {
                     tempIndex = tempIndex - 1;
-                    if (afterMap.has(tempIndex) || tempIndex <leftCase) {
+                    if (afterMap.has(tempIndex) || tempIndex < leftCase) {
+                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                            isAgrrate = true
+                            moveCount--
+                        }
                         break;
                     }
                     moveCount--;
                 }
                 const finalIndex = beforeNums[i] - ((3 - moveCount)); // 最终坐标
-                const beforeVal = beforeMap.get(beforeNums[i]);
+                // const beforeVal = beforeMap.get(beforeNums[i]);
+                const startVal = Number(beforeMap.get(beforeNums[i]))
+                const beforeVal = isAgrrate ? 2 * startVal : startVal
+                isAgrrate ? isAgrrate = false : afterMoveNums.push(finalIndex)
                 afterMap.delete(beforeNums[i]); // 删除之前的坐标
                 afterMap.set(finalIndex, beforeVal); // 记录最终坐标
-                afterMoveNums.push(finalIndex);
-            }
 
+            }
             break;
         case 'ArrowRight':
-            beforeNums.sort((a, b) => b-a)
+            beforeNums.sort((a, b) => b - a)
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3
-                let nextSquareIndex= beforeNums[i]
-                let rightCase=Math.floor(beforeNums[i]/4)*4+3 //3 7
+                let tempIndex = beforeNums[i]
+                let rightCase = Math.floor(beforeNums[i] / 4) * 4 + 3 //3 7
 
                 while (moveCount > 0) {
-                     nextSquareIndex = nextSquareIndex + 1//直接记录了当前的位置
-                    if (afterMap.has(nextSquareIndex) || nextSquareIndex>rightCase) {
+                    tempIndex = tempIndex + 1//直接记录了当前的位置
+                    if (afterMap.has(tempIndex) || tempIndex > rightCase) {
+                         if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                            isAgrrate = true
+                            moveCount--
+                        }
                         break
                     }
                     moveCount--
                 }
                 const finalIndex = beforeNums[i] + (3 - moveCount)
-                console.log("%c Line:143 🌽 finalIndex movedown", "color:#2eafb0", finalIndex);
-                // const beforeVal = 
-                afterMoveNums.push(finalIndex)
+                const startVal = Number(beforeMap.get(beforeNums[i]))
+                const beforeVal = isAgrrate ? 2 * startVal : startVal
+                isAgrrate ? isAgrrate = false : afterMoveNums.push(finalIndex)
                 afterMap.delete(beforeNums[i])
-                afterMap.set(finalIndex,beforeMap.get(beforeNums[i]))
+                afterMap.set(finalIndex, beforeVal)
                 console.log("%c Line:147 🍏 afterMoveNums movedown", "color:#b03734", afterMoveNums);
             }
             break;
     }
+    //将所有有值的节点移除
     for (let i = 0; i < 16; i++) {
         squareParent.children[i]?.children?.[0]?.remove()
     }
-
-    afterMoveNums.forEach((key)=>{ 
-        const newNumDom=document.createElement('div')
-        const val=afterMap.get(key)
-        newNumDom.className=`square-num ${numberColorMap[val]}`
-        newNumDom.innerText=val
-        squareParent.children[key].appendChild(newNumDom)})
-    moveAddRandom(afterMoveNums, beforeMap)//向空的宫格里添加新的div
-    console.log("%c Line:212 🍖 beforeMap", "color:#f5ce50", beforeMap);
+    //将最终的数组的值遍历添加有值的节点
+    console.log("%c Line:220 🍎 afterMoveNums", "color:#e41a6a", afterMoveNums);
+    afterMoveNums.forEach((key) => {
+        const newNumDom = document.createElement('div')
+        const val = afterMap.get(key)
+        newNumDom.className = `square-num ${numberColorMap[val]}`
+        newNumDom.innerText = val
+        squareParent.children[key].appendChild(newNumDom)
+    })
+    moveAddRandom(afterMoveNums, afterMap)//向空的宫格里添加新的div
+    console.log("%c Line:212 🍖 afterMap", "color:#f5ce50", afterMap);
     console.log("%c Line:133 🍡 beforeNums", "color:#93c0a4", beforeNums);
     console.log("%c Line:134 🥪 afterMoveNums", "color:#4fff4B", afterMoveNums);
 });
