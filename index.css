@@ -72,7 +72,11 @@
     align-items: center;
     border-radius: 10px;
     font-size: 50px;
+    transition: transform 0.5s ease-out;
 }
+/* .square-num .active-up{
+    transform:  ;
+} */
 
 .num-2 {
     background-color: #eee4da;
