@@ -68,30 +68,37 @@
 }
 
 .square-num {
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    font-size: 30px;
-    animation: scaleUp 0.05s ease-out forwards;
+    font-size: 40px;
+    font-weight: 700;
+    /* animation: scaleUp 0.05s ease-out forwards; */
     transition: transform 0.3s ease-out;
 }
 
-/* .random-num {
-    animation: scaleUp 0.2s ease-out forwards;
-} */
+.random-num {
+    animation: scaleUp 0.2s ease-in-out forwards;
+}
 
 @keyframes scaleUp {
-    from {
-        width: 30px;
-        height: 30px;
+    10% {
+        width: 0px;
+        height: 0px;
     }
 
-    to {
+    80% {
+        width: 120px;
+        height: 120px;
+    }
+
+    100% {
         width: 100px;
         height: 100px;
+
     }
 
 }

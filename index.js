@@ -260,8 +260,6 @@ document.addEventListener('keydown', (event) => {
         }
 
     })
-    //  squareParent.children[i]?.children?.[0]?.remove()
-
     //将最终的数组的值遍历添加有值的节点
     console.log("%c Line:220 🍎 afterMap", "color:#e41a6a", afterMap);
     console.log("%c Line:220 🍎 beforeMap", "color:#e41a6a", beforeMap);
