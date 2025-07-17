@@ -62,43 +62,66 @@
     margin: 5px;
     background-color: rgba(231, 222, 197, 0.89);
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .square-num {
-    width: 100px;
-    height: 100px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    font-size: 50px;
-    transition: transform 0.5s ease-out;
+    font-size: 30px;
+    animation: scaleUp 0.05s ease-out forwards;
+    transition: transform 0.3s ease-out;
 }
-/* .square-num .active-up{
-    transform:  ;
+
+/* .random-num {
+    animation: scaleUp 0.2s ease-out forwards;
 } */
+
+@keyframes scaleUp {
+    from {
+        width: 30px;
+        height: 30px;
+    }
+
+    to {
+        width: 100px;
+        height: 100px;
+    }
+
+}
 
 .num-2 {
     background-color: #eee4da;
     color: #776e65;
+    z-index: 1
 }
 
 /* 2的颜色（浅色背景，深色文字） */
 .num-4 {
     background-color: #ede0c8;
     color: #776e65;
+    z-index: 1
 }
 
 .num-8 {
     background-color: #f2b179;
+    z-index: 1
 }
 
 .num-16 {
     background-color: #f59563;
+    z-index: 1;
 }
 
 .num-32 {
     background-color: #f67c5f;
+    z-index: 1;
 }
 
 .num-64 {
@@ -107,20 +130,25 @@
 
 .num-128 {
     background-color: #edcf72;
+    z-index: 1;
 }
 
 .num-256 {
     background-color: #edcc61;
+    z-index: 1;
 }
 
 .num-512 {
     background-color: #ed61da;
+    z-index: 1;
 }
 
 .num-1024 {
     background-color: #4841a6;
+    z-index: 1;
 }
 
 .num-2048 {
     background-color: #460303;
+    z-index: 1;
 }

@@ -12,13 +12,11 @@ const numberColorMap = {
     1024: 'num-1024',
     2048: 'num-2048'
 };
-// const enumValue=[2,]
-// const enumColor=[
-//   '#eee4da', '#ede0c8', '#f2b179', '#f59563', 
-//   '#f67c5f', '#f65e3b', '#edcf72', '#edcc61', 
-//   '#edc850', '#edc53f', '#edc22e'
-// ]
+
+
 const squareParent = document.getElementById('parent')
+const squareArr = Array.from(document.querySelectorAll('.square'))
+console.log("%c Line:19 🍊 squareArr", "color:#42b983", squareArr);
 const gameStart = document.getElementById("gameStart")
 // 点击事件
 let clickCount = 0
@@ -53,7 +51,7 @@ function randownGenerate() {
     const randomVal = [2, 4]
     let randomStart = randomVal[Math.floor(Math.random() * 2)]
     const squareNum = document.createElement('div')
-    randomStart === 2 ? squareNum.className = 'square-num num-2' : squareNum.className = 'square-num num-4'
+    randomStart === 2 ? squareNum.className = 'square-num num-2 random-num' : squareNum.className = 'square-num num-4 random-num'
     randomStart === 2 ? squareNum.innerText = 2 : squareNum.innerText = 4
     return squareNum
 }
@@ -85,7 +83,8 @@ document.addEventListener('keydown', (event) => {
     const beforeNums = []//全局的索引值待会儿可以一封装成全局获取索引的一个函数
     const beforeMap = new Map()
     const afterMap = new Map()
-    const afterMoveNums = [];
+    let afterMoveNums = [];
+
     let isAgrrate = false
 
     for (let i = 0; i < 16; i++) {
@@ -103,8 +102,8 @@ document.addEventListener('keydown', (event) => {
     switch (key) {
         case 'ArrowUp':
             console.log('按下上方向键');
-            if (afterMap.has(keyRecord)) {
-                afterMap.delete(keyRecord)
+            if (afterMap.has('keyRecord')) {
+                afterMap.delete('keyRecord')
             }
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3;
@@ -135,13 +134,13 @@ document.addEventListener('keydown', (event) => {
                 // isAgrrate ? isAgrrate = false : afterMoveNums.push(finalIndex)
                 // console.log("%c Line:127 🍩 beforeMap", "color:#33a5ff", beforeMap);
                 publicChangeFunc(finalIndex, beforeNums[i])
-                afterMap.set(keyRecord, 'arrow-up')
+                afterMap.set('keyRecord', 'arrow-up')
             }
             break;
         case 'ArrowDown':
             console.log('按下下方向键');
-            if (afterMap.has(keyRecord)) {
-                afterMap.delete(keyRecord)
+            if (afterMap.has('keyRecord')) {
+                afterMap.delete('keyRecord')
             }
             beforeNums.sort((a, b) => b - a)
             for (let i = 0; i < beforeNumsLen; i++) {
@@ -163,13 +162,13 @@ document.addEventListener('keydown', (event) => {
 
                 const finalIndex = beforeNums[i] + (3 - moveCount) * 4
                 publicChangeFunc(finalIndex, beforeNums[i])
-                afterMap.set(keyRecord, 'arrow-down')
+                afterMap.set('keyRecord', 'arrow-down')
             }
             break;
         case 'ArrowLeft':
             console.log('按下左方向键');
-            if (afterMap.has(keyRecord)) {
-                afterMap.delete(keyRecord)
+            if (afterMap.has('keyRecord')) {
+                afterMap.delete('keyRecord')
             }
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3;
@@ -190,14 +189,14 @@ document.addEventListener('keydown', (event) => {
                 const finalIndex = beforeNums[i] - ((3 - moveCount)); // 最终坐标
                 // const beforeVal = beforeMap.get(beforeNums[i]);
                 publicChangeFunc(finalIndex, beforeNums[i])
-                afterMap.set(keyRecord, 'arrow-left')
+                afterMap.set('keyRecord', 'arrow-left')
 
             }
             break;
         case 'ArrowRight':
             beforeNums.sort((a, b) => b - a)
-            if (afterMap.has(keyRecord)) {
-                afterMap.delete(keyRecord)
+            if (afterMap.has('keyRecord')) {
+                afterMap.delete('keyRecord')
             }
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3
@@ -217,37 +216,76 @@ document.addEventListener('keydown', (event) => {
                 }
                 const finalIndex = beforeNums[i] + (3 - moveCount)
                 publicChangeFunc(finalIndex, beforeNums[i])
-                afterMap.set(keyRecord, 'arrow-right')
+                afterMap.set('keyRecord', 'arrow-right')
             }
             break;
     }
-    //将所有有值的节点移除
-    for (let i = 0; i < 16; i++) {
-        squareParent.children[i]?.children?.[0]?.remove()
-    }
+    //将所有有值的节点都移动
+    const keyRecorded = afterMap.get('keyRecord')
+    const time = 300
+    beforeNums.forEach((hasValIndex, index) => {
+        const moveDistance = Math.abs(hasValIndex - afterMoveNums[index])//00
+
+        //找到当前有值的索引的div让他可以改变transform
+        const squareNum = squareParent.children[hasValIndex].children[0]
+        console.log("%c Line:256 🍔 squareNum", "color:#33a5ff", squareNum);
+        switch (keyRecorded) {
+            case 'arrow-up':
+                squareNum.style.transform = `translateY(${-110 * (moveDistance / 4)}px)`
+                // squareNum.remove()
+                setTimeout(() => {
+                    squareNum.remove();
+                }, time);
+                // squareNum.style.transform = "-translateY(100px)"
+                //没有移动
+                break;
+            case 'arrow-down':
+                squareNum.style.transform = `translateY(${110 * (moveDistance / 4)}px)`
+                setTimeout(() => {
+                    squareNum.remove();
+                }, time);
+                break;
+            case 'arrow-left':
+                squareNum.style.transform = `translateX(${-110 * (moveDistance)}px)`
+                setTimeout(() => {
+                    squareNum.remove();
+                }, time);
+                break;
+            case 'arrow-right':
+                squareNum.style.transform = `translateX(${110 * (moveDistance)}px)`
+                setTimeout(() => {
+                    squareNum.remove();
+                }, time);
+                break
+        }
+
+    })
+    //  squareParent.children[i]?.children?.[0]?.remove()
+
     //将最终的数组的值遍历添加有值的节点
     console.log("%c Line:220 🍎 afterMap", "color:#e41a6a", afterMap);
     console.log("%c Line:220 🍎 beforeMap", "color:#e41a6a", beforeMap);
     console.log("%c Line:220 🍎 beforeNums", "color:#e41a6a", beforeNums);
     console.log("%c Line:220 🍎 afterMoveNums", "color:#e41a6a", afterMoveNums);
-    afterMoveNums.forEach((key) => {
-        const newNumDom = document.createElement('div')
-        const val = afterMap.get(key)
-        newNumDom.className = `square-num ${numberColorMap[val]} `
-        newNumDom.innerText = val
-        squareParent.children[key].appendChild(newNumDom)
-    })
-    moveAddRandom(afterMoveNums, afterMap)//向空的宫格里添加新的div
+    afterMoveNums = [...new Set(afterMoveNums)]
+    setTimeout(() => {
+        afterMoveNums.forEach((key) => {
+            const newNumDom = document.createElement('div')
+            const val = afterMap.get(key)
+            newNumDom.className = `square-num ${numberColorMap[val]} `
+            newNumDom.innerText = val
+            squareParent.children[key].appendChild(newNumDom)
+        })
+        moveAddRandom(afterMoveNums, afterMap)//向空的宫格里添加新的div
+    }, time);
     //处理after后的map和num数组
     function publicChangeFunc(finalIndex, position) {
         const startVal = Number(beforeMap.get(position))
         const beforeVal = isAgrrate ? 2 * startVal : startVal
-        if (!isAgrrate) {
-            afterMoveNums.push(finalIndex);
-        }
+        afterMoveNums.push(finalIndex); //0 0
         isAgrrate = false
         afterMap.delete(position)
-        afterMap.set(finalIndex, beforeVal)
+        afterMap.set(finalIndex, beforeVal)//0 8 0 8
     }
 });
 

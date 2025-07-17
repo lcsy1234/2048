@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九宫格移动动画</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            width: 320px;
+            margin: 50px auto;
+        }
+        
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s ease-out;
+            position: absolute;
+            transform: translate(var(--x, 0), var(--y, 0));
+        }
+        
+        .active {
+            background-color: #e74c3c;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container" id="grid"></div>
+    
+    <script>
+        // 初始化九宫格
+        const gridSize = 3;
+        const cells = [];
+        let activeIndex = 0; // 当前选中的格子索引
+        
+        // 创建九宫格
+        const grid = document.getElementById('grid');
+        for (let i = 0; i < gridSize * gridSize; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.textContent = i + 1;
+            cell.dataset.index = i;
+            cell.addEventListener('click', () => moveTo(i));
+            grid.appendChild(cell);
+            cells.push(cell);
+        }
+        
+        // 设置初始位置
+        updateCellPositions();
+        cells[activeIndex].classList.add('active');
+        
+        // 更新所有格子的位置
+        function updateCellPositions() {
+            cells.forEach((cell, index) => {
+                const row = Math.floor(index / gridSize);
+                const col = index % gridSize;
+                // 计算位置 (考虑间隙)
+                const x = col * (100 + 10);
+                const y = row * (100 + 10);
+                cell.style.setProperty('--x', `${x}px`);
+                cell.style.setProperty('--y', `${y}px`);
+            });
+        }
+        
+        // 移动到指定索引的格子
+        function moveTo(index) {
+            if (index === activeIndex) return;
+            
+            // 移除之前的active状态
+            cells[activeIndex].classList.remove('active');
+            
+            // 设置新的active状态
+            activeIndex = index;
+            cells[activeIndex].classList.add('active');
+            
+            // 触发重排 (确保动画正确触发)
+            cells[activeIndex].offsetWidth;
+            
+            // 更新位置
+            updateCellPositions();
+        }
+    </script>
+</body>
+</html>

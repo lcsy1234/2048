@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .test {
+            width: 100px;
+            height: 100px;
+            background-color: aqua;
+            /* animation: transform 2s ease-out forwards; */
+            margin-top: 10px;
+            z-index: 1;
+            transition: transform 1s ease-out;
+        }
+
+        .num-4 {
+            background-color: #eee4da;
+            color: #776e65;
+            z-index: 1
+        }
+
+        /*       
+        .test.active {
+            transform: translateY(-110px)
+        }
+        .cover{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(71, 21, 235);
+            margin-top: 10px;
+            z-index:1
+        }
+    
+        #moveTest {
+            width: 50px;
+            height: 30px;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <!-- <div class="cover">是否被覆盖</div> -->
+        <div class="test num-4" id="target" >点击移动</div>
+
+    </div>
+    <div><button onclick="moveTest" id="moveTest">按钮</button></div>
+    <script>
+        let btn = document.getElementById('moveTest')
+        let test = document.querySelector('.test')
+        console.log("%c Line:41 🍎 test", "color:#6ec1c2", test);
+        btn.addEventListener('click', () => {
+            test.style.transform = "translateX(100px)"
+        })
+    </script>
+</body>
+
+</html>
