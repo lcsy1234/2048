@@ -74,10 +74,11 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    font-size: 40px;
+    font-size: 45px;
     font-weight: 700;
     /* animation: scaleUp 0.05s ease-out forwards; */
     transition: transform 0.3s ease-out;
+    color: rgb(86, 86, 86);
 }
 
 .random-num {
@@ -91,8 +92,8 @@
     }
 
     80% {
-        width: 120px;
-        height: 120px;
+        width: 110px;
+        height: 110px;
     }
 
     100% {
@@ -104,31 +105,25 @@
 }
 
 .num-2 {
-    background-color: #eee4da;
-    color: #776e65;
-    z-index: 1
+    background-color: #ebdfd2;
 }
 
 /* 2的颜色（浅色背景，深色文字） */
 .num-4 {
-    background-color: #ede0c8;
-    color: #776e65;
-    z-index: 1
+    background-color: #ebc26f;
+
 }
 
 .num-8 {
     background-color: #f2b179;
-    z-index: 1
 }
 
 .num-16 {
     background-color: #f59563;
-    z-index: 1;
 }
 
 .num-32 {
     background-color: #f67c5f;
-    z-index: 1;
 }
 
 .num-64 {
@@ -137,25 +132,20 @@
 
 .num-128 {
     background-color: #edcf72;
-    z-index: 1;
 }
 
 .num-256 {
     background-color: #edcc61;
-    z-index: 1;
 }
 
 .num-512 {
     background-color: #ed61da;
-    z-index: 1;
 }
 
 .num-1024 {
     background-color: #4841a6;
-    z-index: 1;
 }
 
 .num-2048 {
     background-color: #460303;
-    z-index: 1;
 }

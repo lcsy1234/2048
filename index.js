@@ -77,7 +77,14 @@ function moveAddRandom(arr, map) {
 // function publicStartstore() {
 
 // }
+let lastKeyTime = 0;
+const THROTTLE_DELAY = 500; // 限制500ms内只执行一次
 document.addEventListener('keydown', (event) => {
+    const now=Date.now()
+    if(now-lastKeyTime<THROTTLE_DELAY){
+        rertun 
+    }
+    lastKeyTime=now
     // 获取按键信息
     const key = event.key; // 按键名称（如 "ArrowUp", "a", "Enter"）
     const beforeNums = []//全局的索引值待会儿可以一封装成全局获取索引的一个函数
