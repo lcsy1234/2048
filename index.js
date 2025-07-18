@@ -12,8 +12,8 @@ const numberColorMap = {
     1024: 'num-1024',
     2048: 'num-2048'
 };
-
-
+//统计当前得分
+let curSum = 0
 const squareParent = document.getElementById('parent')
 const squareArr = Array.from(document.querySelectorAll('.square'))
 console.log("%c Line:19 🍊 squareArr", "color:#42b983", squareArr);
@@ -78,13 +78,13 @@ function moveAddRandom(arr, map) {
 
 // }
 let lastKeyTime = 0;
-const THROTTLE_DELAY = 500; // 限制500ms内只执行一次
+const THROTTLE_DELAY = 300; // 限制500ms内只执行一次
 document.addEventListener('keydown', (event) => {
-    const now=Date.now()
-    if(now-lastKeyTime<THROTTLE_DELAY){
-        rertun 
+    const now = Date.now()
+    if (now - lastKeyTime < THROTTLE_DELAY) {
+        rertun
     }
-    lastKeyTime=now
+    lastKeyTime = now
     // 获取按键信息
     const key = event.key; // 按键名称（如 "ArrowUp", "a", "Enter"）
     const beforeNums = []//全局的索引值待会儿可以一封装成全局获取索引的一个函数
@@ -155,8 +155,9 @@ document.addEventListener('keydown', (event) => {
                 let tempIndex = beforeNums[i]
 
                 while (moveCount > 0) {
-                    tempIndex = tempIndex + 4//直接记录了当前的位置
-                    if (afterMap.has(tempIndex) || tempIndex >= 16) {
+                    tempIndex = tempIndex + 4//直接记录了当前的位置 12+4=16
+                    //当下一个有值的时候或者到边界
+                    if (afterMap.has(tempIndex) || tempIndex >= 16 ) {
                         if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
                             isAgrrate = true
                             moveCount--
@@ -184,8 +185,9 @@ document.addEventListener('keydown', (event) => {
                 //上移遇到值就直接跳出，如果合并就不能跳出，
                 while (moveCount > 0) {
                     tempIndex = tempIndex - 1;
+                    //如果下一个有值就退出
                     if (afterMap.has(tempIndex) || tempIndex < leftCase) {
-                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i]) && tempIndex >= leftCase) {
                             isAgrrate = true
                             moveCount--
                         }
@@ -208,12 +210,11 @@ document.addEventListener('keydown', (event) => {
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3
                 let tempIndex = beforeNums[i]
-                let rightCase = Math.floor(beforeNums[i] / 4) * 4 + 3 //3 7
-
+                let rightCase = Math.floor(beforeNums[i] / 4) * 4 + 3
                 while (moveCount > 0) {
                     tempIndex = tempIndex + 1//直接记录了当前的位置
                     if (afterMap.has(tempIndex) || tempIndex > rightCase) {
-                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i]) && tempIndex <= rightCase) {
                             isAgrrate = true
                             moveCount--
                         }
@@ -267,11 +268,10 @@ document.addEventListener('keydown', (event) => {
         }
 
     })
+    const score = document.querySelector(".score")
+    console.log("%c Line:301 🍔 score", "color:#ea7e5c", score);
+    score.textContent = curSum
     //将最终的数组的值遍历添加有值的节点
-    console.log("%c Line:220 🍎 afterMap", "color:#e41a6a", afterMap);
-    console.log("%c Line:220 🍎 beforeMap", "color:#e41a6a", beforeMap);
-    console.log("%c Line:220 🍎 beforeNums", "color:#e41a6a", beforeNums);
-    console.log("%c Line:220 🍎 afterMoveNums", "color:#e41a6a", afterMoveNums);
     afterMoveNums = [...new Set(afterMoveNums)]
     setTimeout(() => {
         afterMoveNums.forEach((key) => {
@@ -286,13 +286,19 @@ document.addEventListener('keydown', (event) => {
     //处理after后的map和num数组
     function publicChangeFunc(finalIndex, position) {
         const startVal = Number(beforeMap.get(position))
+        //说明
         const beforeVal = isAgrrate ? 2 * startVal : startVal
+        if (isAgrrate) {
+            curSum += beforeVal
+        }
         afterMoveNums.push(finalIndex); //0 0
         isAgrrate = false
         afterMap.delete(position)
         afterMap.set(finalIndex, beforeVal)//0 8 0 8
     }
+
 });
+
 
 
 

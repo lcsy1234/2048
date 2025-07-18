@@ -82,7 +82,7 @@
 }
 
 .random-num {
-    animation: scaleUp 0.2s ease-in-out forwards;
+    animation: scaleUp 0.1s ease-out forwards;
 }
 
 @keyframes scaleUp {
@@ -92,8 +92,8 @@
     }
 
     80% {
-        width: 110px;
-        height: 110px;
+        width: 105px;
+        height: 105px;
     }
 
     100% {
