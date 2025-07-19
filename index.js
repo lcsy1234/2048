@@ -12,8 +12,13 @@ const numberColorMap = {
     1024: 'num-1024',
     2048: 'num-2048'
 };
+//节流
+let lastKeyTime = 0;
+const score = document.querySelector(".score")
+const historyBest = document.getElementById("max-history")
 //统计当前得分
 let curSum = 0
+let maxInHistory = 0
 const squareParent = document.getElementById('parent')
 const squareArr = Array.from(document.querySelectorAll('.square'))
 console.log("%c Line:19 🍊 squareArr", "color:#42b983", squareArr);
@@ -21,6 +26,12 @@ const gameStart = document.getElementById("gameStart")
 // 点击事件
 let clickCount = 0
 gameStart.addEventListener('click', () => {
+    //历史最好
+    if (curSum > maxInHistory) {
+        historyBest.textContent = curSum
+    }
+    curSum = 0
+    score.textContent = curSum
     clickCount++
     if (clickCount > 1) {
         for (let i = 0; i < 16; i++) {
@@ -55,9 +66,7 @@ function randownGenerate() {
     randomStart === 2 ? squareNum.innerText = 2 : squareNum.innerText = 4
     return squareNum
 }
-//得到宫格中的空值
-//移动要完成两个功能，首先要移动之后看空格中的数字，逻辑（
-//移动数字，
+
 function moveAddRandom(arr, map) {
     const gamingMove = []
     for (let i = 0; i < 16; i++) {
@@ -72,14 +81,9 @@ function moveAddRandom(arr, map) {
     arr.push(gamingRandom[0])
     map.set(gamingRandom[0], Number(firstRandomSquare.children[0].innerText))
 }
-//现在要完成的就是点击直接生成两个新的带有子节点的，这个时候需要定义一个全局的div数组索引
-//封装九宫格的有值的索引
-// function publicStartstore() {
-
-// }
-let lastKeyTime = 0;
-const THROTTLE_DELAY = 300; // 限制500ms内只执行一次
+const THROTTLE_DELAY = 310; // 限制300ms内只执行一次
 document.addEventListener('keydown', (event) => {
+    //节流函数
     const now = Date.now()
     if (now - lastKeyTime < THROTTLE_DELAY) {
         rertun
@@ -91,9 +95,9 @@ document.addEventListener('keydown', (event) => {
     const beforeMap = new Map()
     const afterMap = new Map()
     let afterMoveNums = [];
-
+    let moveCount = 3
     let isAgrrate = false
-
+    //每次下一个按键都要获取
     for (let i = 0; i < 16; i++) {
         if (squareParent.children[i].hasChildNodes()) {
             const val = Number(squareParent.children[i].children[0].innerText)
@@ -102,19 +106,22 @@ document.addEventListener('keydown', (event) => {
             afterMap.set(i, val);
         }
     }
+    //这个beforeNums
     const beforeNumsLen = beforeNums.length
-    let moveCount = 3
-    // const mapArr = Array.from(beforeMap)//
+    if (afterMap.has('keyRecord')) {
+        afterMap.delete('keyRecord')
+    }
+    const moveConfig = {
+        ArrowDown:{
+             checkBoundary: (index) => index >= 16,
+        }
+    }
     //现在我要处理的是将每次移动位置都将这个值更改，
     switch (key) {
         case 'ArrowUp':
             console.log('按下上方向键');
-            if (afterMap.has('keyRecord')) {
-                afterMap.delete('keyRecord')
-            }
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3;
-                // debugger
                 let tempIndex = beforeNums[i]; // 移动的临时坐标
                 while (moveCount > 0) {
                     tempIndex = tempIndex - 4;
@@ -130,54 +137,17 @@ document.addEventListener('keydown', (event) => {
                     moveCount--;
                 }
                 const finalIndex = beforeNums[i] - ((3 - moveCount) * 4); // 最终坐标
-                // // //获取原始值
-                // const startVal = Number(beforeMap.get(beforeNums[i]))
-                // const beforeVal = isAgrrate ? 2 * startVal : startVal
-                // // 删除之前的位置，因为已经不需要之前的位置了
-                // afterMap.delete(beforeNums[i]);
-                // // 记录最终坐标以及值
-                // afterMap.set(finalIndex, beforeVal);
-                // //可以去重也可以根据isAgrrate来判断,不重复push重复的位置
-                // isAgrrate ? isAgrrate = false : afterMoveNums.push(finalIndex)
-                // console.log("%c Line:127 🍩 beforeMap", "color:#33a5ff", beforeMap);
                 publicChangeFunc(finalIndex, beforeNums[i])
                 afterMap.set('keyRecord', 'arrow-up')
             }
             break;
         case 'ArrowDown':
             console.log('按下下方向键');
-            if (afterMap.has('keyRecord')) {
-                afterMap.delete('keyRecord')
-            }
             beforeNums.sort((a, b) => b - a)
-            for (let i = 0; i < beforeNumsLen; i++) {
-                moveCount = 3
-                let tempIndex = beforeNums[i]
-
-                while (moveCount > 0) {
-                    tempIndex = tempIndex + 4//直接记录了当前的位置 12+4=16
-                    //当下一个有值的时候或者到边界
-                    if (afterMap.has(tempIndex) || tempIndex >= 16 ) {
-                        if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
-                            isAgrrate = true
-                            moveCount--
-                        }
-                        break
-                    }
-                    moveCount--
-                }
-                //整理出函数，输入参数，beforeNums[i] moveCount，isAgrrate
-
-                const finalIndex = beforeNums[i] + (3 - moveCount) * 4
-                publicChangeFunc(finalIndex, beforeNums[i])
-                afterMap.set('keyRecord', 'arrow-down')
-            }
+            publicMoveFunc(4,'ArrowDown')
             break;
         case 'ArrowLeft':
             console.log('按下左方向键');
-            if (afterMap.has('keyRecord')) {
-                afterMap.delete('keyRecord')
-            }
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3;
                 let tempIndex = beforeNums[i]; // 移动的临时坐标
@@ -199,14 +169,13 @@ document.addEventListener('keydown', (event) => {
                 // const beforeVal = beforeMap.get(beforeNums[i]);
                 publicChangeFunc(finalIndex, beforeNums[i])
                 afterMap.set('keyRecord', 'arrow-left')
-
             }
             break;
         case 'ArrowRight':
+            console.log('按下右边方向键');
+            debugger
             beforeNums.sort((a, b) => b - a)
-            if (afterMap.has('keyRecord')) {
-                afterMap.delete('keyRecord')
-            }
+
             for (let i = 0; i < beforeNumsLen; i++) {
                 moveCount = 3
                 let tempIndex = beforeNums[i]
@@ -240,11 +209,9 @@ document.addEventListener('keydown', (event) => {
         switch (keyRecorded) {
             case 'arrow-up':
                 squareNum.style.transform = `translateY(${-110 * (moveDistance / 4)}px)`
-                // squareNum.remove()
                 setTimeout(() => {
                     squareNum.remove();
                 }, time);
-                // squareNum.style.transform = "-translateY(100px)"
                 //没有移动
                 break;
             case 'arrow-down':
@@ -268,8 +235,7 @@ document.addEventListener('keydown', (event) => {
         }
 
     })
-    const score = document.querySelector(".score")
-    console.log("%c Line:301 🍔 score", "color:#ea7e5c", score);
+
     score.textContent = curSum
     //将最终的数组的值遍历添加有值的节点
     afterMoveNums = [...new Set(afterMoveNums)]
@@ -286,18 +252,41 @@ document.addEventListener('keydown', (event) => {
     //处理after后的map和num数组
     function publicChangeFunc(finalIndex, position) {
         const startVal = Number(beforeMap.get(position))
-        //说明
         const beforeVal = isAgrrate ? 2 * startVal : startVal
         if (isAgrrate) {
             curSum += beforeVal
         }
-        afterMoveNums.push(finalIndex); //0 0
+        afterMoveNums.push(finalIndex);
         isAgrrate = false
         afterMap.delete(position)
-        afterMap.set(finalIndex, beforeVal)//0 8 0 8
+        afterMap.set(finalIndex, beforeVal)
     }
 
+    function publicMoveFunc(moveDistance,derection) {
+        for (let i = 0; i < beforeNumsLen; i++) {
+            moveCount = 3
+            let tempIndex = beforeNums[i]
+            while (moveCount > 0) {
+                tempIndex += moveDistance//直接记录了当前的位置 12+4=16
+                //当下一个有值的时候或者到边界
+                const isBoundary = moveConfig.derection.checkBoundary(tempIndex)
+                if (afterMap.has(tempIndex) || isBoundary) {
+                    if (afterMap.get(tempIndex) === afterMap.get(beforeNums[i])) {
+                        isAgrrate = true
+                        moveCount--
+                    }
+                    break
+                }
+                moveCount--
+            }
+            //整理出函数，输入参数，beforeNums[i] moveCount，isAgrrate
+            const finalIndex = beforeNums[i] + (3 - moveCount) * 4
+            publicChangeFunc(finalIndex, beforeNums[i])
+            afterMap.set('keyRecord', 'arrow-down')
+        }
+    }
 });
+//点击的移动事件
 
 
 
