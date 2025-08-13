@@ -85,7 +85,7 @@ document.addEventListener("keydown", (event) => {
   //节流函数
   const now = Date.now();
   if (now - lastKeyTime < THROTTLE_DELAY) {
-    rertun;
+    return;
   }
   lastKeyTime = now;
   // 获取按键信息
@@ -248,7 +248,7 @@ document.addEventListener("keydown", (event) => {
     afterMap.delete(position);
     afterMap.set(finalIndex, beforeVal);
   }
-//moveDistance是向上-4；向下+4；derection是向上还是向下
+  //moveDistance是向上-4；向下+4；derection是向上还是向下
   function publicMoveFunc(moveDistance, derection) {
     for (let i = 0; i < beforeNumsLen; i++) {
       moveCount = 3;
@@ -264,13 +264,75 @@ document.addEventListener("keydown", (event) => {
             moveCount--;
           }
           break;
+        } else if (tempIndex === beforeNums[beforeNumsLen - 1]) {
+          alert("该方向已没有可移动的值");
         }
         moveCount--;
       }
-     
+
       const finalIndex = beforeNums[i] + (3 - moveCount) * moveDistance;
       publicChangeFunc(finalIndex, beforeNums[i]);
       afterMap.set("keyRecord", derection);
     }
   }
+  function canMove(afterMap) {
+    // 遍历所有有值的格子，检查上下左右是否有相同值或空白可移动
+    const keys = [...afterMap.keys()];
+    for (const key of keys) {
+      const val = afterMap.get(key);
+      const row = Math.floor(key / 4); // 当前格子所在行（0~3）
+      const col = key % 4; // 当前格子所在列（0~3）
+
+      // 检查上方（row-1）
+      const upKey = (row - 1) * 4 + col;
+      if (row > 0 && (afterMap.get(upKey) === val || !afterMap.has(upKey))) {
+        return true;
+      }
+      // 检查下方（row+1）
+      const downKey = (row + 1) * 4 + col;
+      if (
+        row < 3 &&
+        (afterMap.get(downKey) === val || !afterMap.has(downKey))
+      ) {
+        return true;
+      }
+      // 检查左方（col-1）
+      const leftKey = row * 4 + (col - 1);
+      if (
+        col > 0 &&
+        (afterMap.get(leftKey) === val || !afterMap.has(leftKey))
+      ) {
+        return true;
+      }
+      // 检查右方（col+1）
+      const rightKey = row * 4 + (col + 1);
+      if (
+        col < 3 &&
+        (afterMap.get(rightKey) === val || !afterMap.has(rightKey))
+      ) {
+        return true;
+      }
+    }
+    // 所有格子都检查完，没有可移动方向
+    return false;
+  }
+  setTimeout(() => {
+    // 重新收集当前棋盘数据（因为 DOM 可能刚更新，需要重新读 afterMap）
+    const currentMap = new Map();
+    for (let i = 0; i < 16; i++) {
+      if (squareParent.children[i].hasChildNodes()) {
+        currentMap.set(
+          i,
+          Number(squareParent.children[i].children[0].innerText)
+        );
+      }
+    }
+    // 判断是否还能移动
+    if (!canMove(currentMap)) {
+      alert("已没有可移动的值，游戏结束～");
+      // （可选）如果需要重置游戏，可在此处调用初始化逻辑
+      // gameStart.click(); // 比如触发重新开始
+    }
+  }, 350); // 延迟 350ms，确保 DOM 更新完成后再检查
 });
+
