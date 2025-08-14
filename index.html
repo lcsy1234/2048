@@ -1,48 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2048小游戏</title>
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./index.css" />
+  </head>
 
-</head>
-
-<body>
-    <div class="whole">
+  <body>
+    <div class="whole-back">
+      <div class="whole">
         <div class="gameName">2048小游戏</div>
         <div class="scoreEvaluate">
-            <div class="left common">我的得分
-                <div class="score">0</div>
-            </div>
-            <div class="right common">历史最好
-                <div class="history-best" id="max-history">0</div>
-            </div>
+          <div class="left common">
+            我的得分
+            <div class="score">0</div>
+          </div>
+          <div class="right common">
+            历史最好
+            <div class="history-best" id="max-history">0</div>
+          </div>
         </div>
         <div>
-            <button class="new-game" id="gameStart">newGame</button>
+          <button class="new-game" id="gameStart">newGame</button>
         </div>
         <div class="nine-grid" id="parent">
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
-            <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
+          <div class="square"></div>
         </div>
+      </div>
+      <div class="rank-name">
+        <div class="rank-first">排行榜</div>
+        <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+         <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+        <div class="rank-cell">2048</div>
+      </div>
     </div>
     <script src="./index.js"></script>
-</body>
-
+  </body>
 </html>

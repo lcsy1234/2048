@@ -1,151 +1,195 @@
+.whole-back {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("pic/backimg.png");
+  background-repeat: no-repeat; /* 避免背景图重复平铺 */
+  background-size: cover; /* 覆盖容器，按比例拉伸，可能裁剪 */
+  background-position: center; /* 背景图居中显示 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rank-name {
+  margin-left: 250px;
+  width: 320px;
+  height: 700px;
+  background-color: rgba(231, 222, 197, 0.89);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 50px;
+  text-align: center;
+}
+.rank-first {
+  width: 150px;
+  height: 60px;
+  color: #f66409;
+  background-color: #482d24;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 60px;
+  padding: 10px;
+}
+.rank-cell {
+  font-size: 40px;
+  width: 150px;
+  height: 55px;
+  border-bottom: 3px solid #482d24;
+  color: #fefdfc;
+}
+.rank-cell .hilight {
+  width: 150px;
+  height: 55px;
+  border-bottom: 3px solid #482d24;
+  color: #e71a1a;
+}
 .whole {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .gameName {
-    color: #7e7931;
-    font-size: 50px;
-    font-weight: bolder;
-    text-align: center;
+  color: #482d24;
+  font-size: 50px;
+  font-weight: bolder;
+  text-align: center;
 }
 
 .scoreEvaluate {
-    display: flex;
-    width: 500px;
+  display: flex;
+  width: 500px;
 }
 
 .common {
-    flex: 1;
-    background-color: #b19d79;
-    border-radius: 10px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+  flex: 1;
+  background-color: #482d24;
+  border-radius: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .score {
-    font-size: 60px;
-    color: white;
+  font-size: 60px;
+  color: white;
 }
 
 .history-best {
-    font-size: 60px;
-    color: white;
+  font-size: 60px;
+  color: white;
 }
 
 .new-game {
-    height: 50px;
-    width: 150px;
-    color: white;
-    background-color: rgb(151, 98, 79);
-    border-radius: 10px;
-    border: 1px solid black;
+  height: 50px;
+  width: 150px;
+  color: white;
+  /* rgb(151, 98, 79) */
+  background-color: #482d24;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .nine-grid {
-    margin-top: 20px;
-    width: 440px;
-    flex-wrap: wrap;
-    display: flex;
-    /* justify-content: space-around; */
-    flex-direction: row;
-    background-color: #bbada0;
+  margin-top: 20px;
+  width: 440px;
+  flex-wrap: wrap;
+  display: flex;
+  /* justify-content: space-around; */
+  flex-direction: row;
+  background-color: #482d24;
 }
 
 .square {
-    width: 100px;
-    height: 100px;
-    margin: 5px;
-    background-color: rgba(231, 222, 197, 0.89);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  background-color: rgba(231, 222, 197, 0.89);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .square-num {
-    width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    font-size: 45px;
-    font-weight: 700;
-    /* animation: scaleUp 0.05s ease-out forwards; */
-    transition: transform 0.3s ease-out;
-    color: rgb(86, 86, 86);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 45px;
+  font-weight: 700;
+  /* animation: scaleUp 0.05s ease-out forwards; */
+  transition: transform 0.3s ease-out;
+  color: rgb(86, 86, 86);
 }
 
 .random-num {
-    animation: scaleUp 0.1s ease-out forwards;
+  animation: scaleUp 0.1s ease-out forwards;
 }
 
 @keyframes scaleUp {
-    10% {
-        width: 0px;
-        height: 0px;
-    }
+  10% {
+    width: 0px;
+    height: 0px;
+  }
 
-    80% {
-        width: 105px;
-        height: 105px;
-    }
+  80% {
+    width: 105px;
+    height: 105px;
+  }
 
-    100% {
-        width: 100px;
-        height: 100px;
-
-    }
-
+  100% {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .num-2 {
-    background-color: #ebdfd2;
+  background-color: #ebdfd2;
 }
 
 /* 2的颜色（浅色背景，深色文字） */
 .num-4 {
-    background-color: #ebc26f;
-
+  background-color: #ebc26f;
 }
 
 .num-8 {
-    background-color: #f2b179;
+  background-color: #f2b179;
 }
 
 .num-16 {
-    background-color: #f59563;
+  background-color: #f59563;
 }
 
 .num-32 {
-    background-color: #f67c5f;
+  background-color: #f67c5f;
 }
 
 .num-64 {
-    background-color: #f65e3b;
+  background-color: #f65e3b;
 }
 
 .num-128 {
-    background-color: #edcf72;
+  background-color: #edcf72;
 }
 
 .num-256 {
-    background-color: #edcc61;
+  background-color: #edcc61;
 }
 
 .num-512 {
-    background-color: #ed61da;
+  background-color: #ed61da;
 }
 
 .num-1024 {
-    background-color: #4841a6;
+  background-color: #4841a6;
 }
 
 .num-2048 {
-    background-color: #460303;
+  background-color: #460303;
 }
