@@ -1,3 +1,4 @@
+import {getUser } from axios.js
 const numberColorMap = {
   2: "num-2",
   4: "num-4",
@@ -335,4 +336,9 @@ document.addEventListener("keydown", (event) => {
     }
   }, 350); // 延迟 350ms，确保 DOM 更新完成后再检查
 });
+document.addEventListener('DOMContentLoaded', () => {
+  trackVisit();
+});
+
+
 
