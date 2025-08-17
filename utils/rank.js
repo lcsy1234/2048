@@ -16,3 +16,18 @@ export async function trackVisit() {
     console.log("获取用户信息失败");
   }
 }
+export async function updateBestScore(params) {
+  try {
+    const result = await request(
+      "https://htsdgsfrswjh.sealoshzh.site/update-best-score",
+      {
+        method: "POST",
+        body:JSON.stringify(params)
+      }
+    );
+  } catch (error) {
+    console.log("%c Line:37 🍓 error", "color:#e41a6a", error);
+    console.log("获取用户信息失败");
+  }
+}
+

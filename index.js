@@ -1,4 +1,4 @@
-import {trackVisit } from './utils/rank.js'
+import { trackVisit,updateBestScore } from "./utils/rank.js";
 const numberColorMap = {
   2: "num-2",
   4: "num-4",
@@ -24,11 +24,24 @@ const squareArr = Array.from(document.querySelectorAll(".square"));
 const gameStart = document.getElementById("gameStart");
 // 点击事件
 let clickCount = 0;
+async function getHistory() {
+  maxInHistory = await trackVisit();
+  historyBest.textContent = maxInHistory;
+}
+// async function getRankList() {
+// //   maxInHistory = await trackVisit();
+// }
+document.addEventListener("DOMContentLoaded", () => {
+  getHistory();
+  getRankList()
+});
 gameStart.addEventListener("click", () => {
   //历史最好
   if (curSum > maxInHistory) {
     historyBest.textContent = curSum;
+    updateBestScore({bestScore:curSum})
   }
+
   curSum = 0;
   score.textContent = curSum;
   clickCount++;
@@ -336,10 +349,3 @@ document.addEventListener("keydown", (event) => {
     }
   }, 350); // 延迟 350ms，确保 DOM 更新完成后再检查
 });
-document.addEventListener('DOMContentLoaded', async() => {
- historyBest.textContent =  await trackVisit();
- console.log("%c Line:341 🥃 maxInHistory", "color:#2eafb0", maxInHistory);
-});
-
-
-
