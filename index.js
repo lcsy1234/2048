@@ -1,4 +1,4 @@
-import { trackVisit,updateBestScore } from "./utils/rank.js";
+import { trackVisit,updateBestScore,fetchRankList} from "./utils/rank.js";
 const numberColorMap = {
   2: "num-2",
   4: "num-4",
@@ -28,9 +28,16 @@ async function getHistory() {
   maxInHistory = await trackVisit();
   historyBest.textContent = maxInHistory;
 }
-// async function getRankList() {
-// //   maxInHistory = await trackVisit();
-// }
+async function getRankList() {
+  const list = await fetchRankList();
+  const rank=document.querySelector(".rank-name")
+  list.forEach((item,index)=>{
+    const rankDiv=document.createElement('div')
+    rankDiv.textContent=item.bestScore
+    rank.appendChild(rankDiv)
+  })
+
+}
 document.addEventListener("DOMContentLoaded", () => {
   getHistory();
   getRankList()

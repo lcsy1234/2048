@@ -30,4 +30,19 @@ export async function updateBestScore(params) {
     console.log("获取用户信息失败");
   }
 }
+export async function fetchRankList() {
+  try {
+    const result = await request(
+      "https://htsdgsfrswjh.sealoshzh.site/rank-list",
+      {
+        method: "GET",
+      }
+    );
+      console.log("%c Line:36 🍤 result", "color:#7f2b82", result);
+    return result.rankList
+  } catch (error) {
+    console.log("%c Line:37 🍓 error", "color:#e41a6a", error);
+    console.log("获取排行榜失败");
+  }
+}
 
