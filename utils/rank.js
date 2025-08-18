@@ -16,6 +16,7 @@ export async function trackVisit() {
     console.log("获取用户信息失败");
   }
 }
+//她是刷新页面就更新数据并且返回当前的排行榜
 export async function updateBestScore(params) {
   try {
     const result = await request(
@@ -25,24 +26,12 @@ export async function updateBestScore(params) {
         body:JSON.stringify(params)
       }
     );
+    return result.rankList
   } catch (error) {
     console.log("%c Line:37 🍓 error", "color:#e41a6a", error);
     console.log("获取用户信息失败");
   }
 }
-export async function fetchRankList() {
-  try {
-    const result = await request(
-      "https://htsdgsfrswjh.sealoshzh.site/rank-list",
-      {
-        method: "GET",
-      }
-    );
-      console.log("%c Line:36 🍤 result", "color:#7f2b82", result);
-    return result.rankList
-  } catch (error) {
-    console.log("%c Line:37 🍓 error", "color:#e41a6a", error);
-    console.log("获取排行榜失败");
-  }
-}
+
+
 

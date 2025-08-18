@@ -1,4 +1,4 @@
-import { trackVisit,updateBestScore,fetchRankList} from "./utils/rank.js";
+import { trackVisit, updateBestScore } from "./utils/rank.js";
 const numberColorMap = {
   2: "num-2",
   4: "num-4",
@@ -28,25 +28,45 @@ async function getHistory() {
   maxInHistory = await trackVisit();
   historyBest.textContent = maxInHistory;
 }
-async function getRankList() {
-  const list = await fetchRankList();
-  const rank=document.querySelector(".rank-name")
-  list.forEach((item,index)=>{
-    const rankDiv=document.createElement('div')
-    rankDiv.textContent=item.bestScore
-    rank.appendChild(rankDiv)
-  })
 
+async function updateRank(params) {
+  const updatedRankList = await updateBestScore(params);
+  const listRankNum = document.querySelector(".list-rank");
+  const listName = document.querySelector(".list-name");
+  const listScore = document.querySelector(".list-score");
+  const rankItems = document.querySelectorAll(".rank-item");
+  rankItems.forEach((item) => {
+    item.remove();
+  });
+  let elements = [];
+
+  updatedRankList.forEach((item, index) => {
+    const listRankNumDiv = document.createElement("div");
+    const listNameDiv = document.createElement("div");
+    const listScoreDiv = document.createElement("div");
+    elements = [listRankNumDiv, listNameDiv, listScoreDiv];
+    elements.forEach((item) => {
+      item.className = "rank-item";
+    });
+    elements[0].textContent = index + 1;
+    elements[1].textContent = item?.username;
+    elements[2].textContent = item?.bestScore;
+    listRankNum.appendChild(listRankNumDiv);
+    listName.appendChild(listNameDiv);
+    listScore.appendChild(listScoreDiv);
+  });
 }
 document.addEventListener("DOMContentLoaded", () => {
+  //这个是看是否有用户记录
   getHistory();
-  getRankList()
+  //拉取当前排行榜,后端做了判断，问题是需要await吗？
+  updateRank({ bestScore: maxInHistory });
 });
 gameStart.addEventListener("click", () => {
   //历史最好
   if (curSum > maxInHistory) {
     historyBest.textContent = curSum;
-    updateBestScore({bestScore:curSum})
+    updateRank({ bestScore: curSum });
   }
 
   curSum = 0;
@@ -215,28 +235,26 @@ document.addEventListener("keydown", (event) => {
     const squareNum = squareParent.children[hasValIndex].children[0];
     switch (keyRecorded) {
       case "ArrowUp":
-        squareNum.style.transform = `translateY(${
-          -110 * (moveDistance / 4)
-        }px)`;
+        squareNum.style.transform = `translateY(${-75 * (moveDistance / 4)}px)`;
         setTimeout(() => {
           squareNum.remove();
         }, time);
         //没有移动
         break;
       case "ArrowDown":
-        squareNum.style.transform = `translateY(${110 * (moveDistance / 4)}px)`;
+        squareNum.style.transform = `translateY(${75 * (moveDistance / 4)}px)`;
         setTimeout(() => {
           squareNum.remove();
         }, time);
         break;
       case "ArrowLeft":
-        squareNum.style.transform = `translateX(${-110 * moveDistance}px)`;
+        squareNum.style.transform = `translateX(${-75 * moveDistance}px)`;
         setTimeout(() => {
           squareNum.remove();
         }, time);
         break;
       case "ArrowRight":
-        squareNum.style.transform = `translateX(${110 * moveDistance}px)`;
+        squareNum.style.transform = `translateX(${75 * moveDistance}px)`;
         setTimeout(() => {
           squareNum.remove();
         }, time);
@@ -350,7 +368,13 @@ document.addEventListener("keydown", (event) => {
     }
     // 判断是否还能移动
     if (!canMove(currentMap)) {
+      historyBest.textContent = maxInHistory;
+      if (curSum > maxInHistory) {
+        historyBest.textContent = curSum;
+        updateRank({ bestScore: curSum });
+      }
       alert("已没有可移动的值，游戏结束～");
+
       // （可选）如果需要重置游戏，可在此处调用初始化逻辑
       // gameStart.click(); // 比如触发重新开始
     }

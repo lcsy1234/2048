@@ -1,54 +1,71 @@
 .whole-back {
+  background-image: url("pic/wholeback.png");
+  background-repeat: no-repeat; /* 避免背景图重复平铺 */
+  background-size: 100% 110%; /* 覆盖容器，按比例拉伸，可能裁剪 */
+  background-position: center; /* 背景图居中显示 */
   width: 100vw;
   height: 100vh;
-  background-image: url("pic/backimg.png");
-  background-repeat: no-repeat; /* 避免背景图重复平铺 */
-  background-size: cover; /* 覆盖容器，按比例拉伸，可能裁剪 */
-  background-position: center; /* 背景图居中显示 */
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.rank-name {
+.rank-list {
+  background-image: url("pic/rankback.png");
+  background-repeat: no-repeat;
+  background-size: 100% 110%;
+  background-position: center;
   margin-left: 250px;
   width: 320px;
   height: 700px;
   background-color: rgba(231, 222, 197, 0.89);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   font-size: 50px;
   text-align: center;
+  color: #482d24;
+  font-weight: 700;
 }
-.rank-first {
+.rank-title {
   width: 150px;
-  height: 60px;
-  color: #f66409;
-  background-color: #482d24;
+  height: 40px;
+  color: #482d24;
   border-radius: 10px;
   text-align: center;
   line-height: 60px;
   padding: 10px;
 }
-.rank-cell {
-  font-size: 40px;
-  width: 150px;
-  height: 55px;
-  border-bottom: 3px solid #482d24;
-  color: #fefdfc;
+
+.rank-item {
+  color: rgb(80, 5, 9);
 }
-.rank-cell .hilight {
-  width: 150px;
-  height: 55px;
-  border-bottom: 3px solid #482d24;
-  color: #e71a1a;
+
+.list {
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.list-common {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 500px;
 }
 .whole {
+  background-image: url("pic/gameWhole.png");
+  background-repeat: no-repeat; /* 避免背景图重复平铺 */
+  background-size: 100% 100%; /* 覆盖容器，按比例拉伸，可能裁剪 */
+  background-position: center; /* 背景图居中显示 */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 700px;
+  width: 600px;
 }
 
 .gameName {
@@ -71,41 +88,38 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-}
-
-.score {
-  font-size: 60px;
-  color: white;
-}
-
-.history-best {
-  font-size: 60px;
-  color: white;
+  color: rgba(231, 222, 197, 0.89);
+  font-size: 40px;
 }
 
 .new-game {
   height: 50px;
   width: 150px;
-  color: white;
+  color: rgb(187, 167, 167);
   /* rgb(151, 98, 79) */
   background-color: #482d24;
   border-radius: 10px;
   border: 1px solid black;
+  font-size: 20px;
 }
 
 .nine-grid {
+  background-image: url("pic/backimg.png");
+  background-repeat: no-repeat; /* 避免背景图重复平铺 */
+  background-size: 100% 110%; /* 覆盖容器，按比例拉伸，可能裁剪 */
+  background-position: center; /* 背景图居中显示 */
   margin-top: 20px;
-  width: 440px;
+  width: 300px;
   flex-wrap: wrap;
   display: flex;
   /* justify-content: space-around; */
   flex-direction: row;
-  background-color: #482d24;
+  /* background-color: #482d24; */
 }
 
 .square {
-  width: 100px;
-  height: 100px;
+  width: 65px;
+  height: 65px;
   margin: 5px;
   background-color: rgba(231, 222, 197, 0.89);
   border-radius: 10px;
@@ -113,15 +127,18 @@
   justify-content: center;
   align-items: center;
 }
-
+.squre-dark {
+  background-color: rgb(106, 66, 66);
+}
+/*height: 70px;故意设置比以前大一点  */
 .square-num {
-  width: 100px;
-  height: 100px;
+  width: 65px;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  font-size: 45px;
+  font-size: 25px;
   font-weight: 700;
   /* animation: scaleUp 0.05s ease-out forwards; */
   transition: transform 0.3s ease-out;
@@ -144,8 +161,8 @@
   }
 
   100% {
-    width: 100px;
-    height: 100px;
+    width: 65px;
+    height: 70px;
   }
 }
 
