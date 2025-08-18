@@ -374,7 +374,6 @@ document.addEventListener("keydown", (event) => {
         updateRank({ bestScore: curSum });
       }
       alert("已没有可移动的值，游戏结束～");
-
       // （可选）如果需要重置游戏，可在此处调用初始化逻辑
       // gameStart.click(); // 比如触发重新开始
     }
