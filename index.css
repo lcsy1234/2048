@@ -40,6 +40,9 @@
 .rank-item {
   color: rgb(80, 5, 9);
 }
+.rank-item.highlight{
+     color: rgb(40, 12, 179);
+}
 
 .list {
   width: 100%;

@@ -24,8 +24,11 @@ const squareArr = Array.from(document.querySelectorAll(".square"));
 const gameStart = document.getElementById("gameStart");
 // 点击事件
 let clickCount = 0;
+let curName=""
 async function getHistory() {
-  maxInHistory = await trackVisit();
+  const {bestScore,username}=await trackVisit()
+  maxInHistory =bestScore ;
+  curName=username
   historyBest.textContent = maxInHistory;
 }
 
@@ -48,6 +51,9 @@ async function updateRank(params) {
     elements.forEach((item) => {
       item.className = "rank-item";
     });
+    if(item?.username===curName){
+      listNameDiv.className="rank-item highlight"
+    }
     elements[0].textContent = index + 1;
     elements[1].textContent = item?.username;
     elements[2].textContent = item?.bestScore;
@@ -368,14 +374,13 @@ document.addEventListener("keydown", (event) => {
     }
     // 判断是否还能移动
     if (!canMove(currentMap)) {
-      historyBest.textContent = maxInHistory;
+      // historyBest.textContent = maxInHistory;
       if (curSum > maxInHistory) {
         historyBest.textContent = curSum;
         updateRank({ bestScore: curSum });
       }
       alert("已没有可移动的值，游戏结束～");
-      // （可选）如果需要重置游戏，可在此处调用初始化逻辑
-      // gameStart.click(); // 比如触发重新开始
     }
   }, 350); // 延迟 350ms，确保 DOM 更新完成后再检查
 });
+//图片太大了，有bug

@@ -9,7 +9,7 @@ export async function trackVisit() {
     );
     if (result) {
         console.log("%c Line:11 🍬 result", "color:#33a5ff", result);
-        return result.bestScore ||0
+        return result
     }
   } catch (error) {
     console.log("%c Line:37 🍓 error", "color:#e41a6a", error);
