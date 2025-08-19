@@ -24,11 +24,11 @@ const squareArr = Array.from(document.querySelectorAll(".square"));
 const gameStart = document.getElementById("gameStart");
 // 点击事件
 let clickCount = 0;
-let curName=""
+let curName = "";
 async function getHistory() {
-  const {bestScore,username}=await trackVisit()
-  maxInHistory =bestScore ;
-  curName=username
+  const { bestScore, username } = await trackVisit();
+  maxInHistory = bestScore;
+  curName = username;
   historyBest.textContent = maxInHistory;
 }
 
@@ -51,8 +51,15 @@ async function updateRank(params) {
     elements.forEach((item) => {
       item.className = "rank-item";
     });
-    if(item?.username===curName){
-      listNameDiv.className="rank-item highlight"
+    if (item?.username === curName) {
+      console.log("%c Line:55 🍭 item?.username", "color:#7f2b82", item?.username);
+      const myRank=document.getElementById("my-rank")
+      const myName=document.getElementById("my-name")
+      const myScore=document.getElementById("my-score")
+      myRank.textContent=`>>${index+1}`||0
+      myName.textContent=item?.username||"Bk9Mh梦想侠客"
+      myScore.textContent=item?.bestScore||0
+      listNameDiv.className = "rank-item highlight";
     }
     elements[0].textContent = index + 1;
     elements[1].textContent = item?.username;
@@ -63,10 +70,11 @@ async function updateRank(params) {
   });
 }
 document.addEventListener("DOMContentLoaded", () => {
-  //这个是看是否有用户记录
+  //没有账号就自动注册一个并且返回他的名字，有的话就返回他的id和名字
   getHistory();
-  //拉取当前排行榜,后端做了判断，问题是需要await吗？
   updateRank({ bestScore: maxInHistory });
+  //这个是看是否有用户记录
+  //拉取当前排行榜,后端做了判断，问题是需要await吗？
 });
 gameStart.addEventListener("click", () => {
   //历史最好

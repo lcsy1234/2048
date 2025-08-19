@@ -8,7 +8,6 @@ export async function request(url, options = {}) {
   };
   const config = { ...defaultOptions, ...options };
     const userId = getUserId()
-    console.log("%c Line:11 🥛 userId", "color:#4fff4B", userId);
     if (userId) {
       config.headers.Authorization = `Bearer ${userId}`;
     }
