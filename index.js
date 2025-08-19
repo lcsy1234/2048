@@ -69,9 +69,9 @@ async function updateRank(params) {
     listScore.appendChild(listScoreDiv);
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
   //没有账号就自动注册一个并且返回他的名字，有的话就返回他的id和名字
-  getHistory();
+  await getHistory();
   updateRank({ bestScore: maxInHistory });
   //这个是看是否有用户记录
   //拉取当前排行榜,后端做了判断，问题是需要await吗？
