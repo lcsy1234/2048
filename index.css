@@ -1,3 +1,6 @@
+body{
+    margin: 0;
+}
 .whole-back {
   background-image: url("pic/wholeback.png");
   background-repeat: no-repeat; /* 避免背景图重复平铺 */
