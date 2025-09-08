@@ -29,6 +29,7 @@ async function getHistory() {
   const { bestScore, username } = await trackVisit();
   maxInHistory = bestScore;
   curName = username;
+  window.alert(`欢迎您，【匿名用户】${username}～\n您的历史最高分是${bestScore}分！`);
   historyBest.textContent = maxInHistory;
 }
 
@@ -52,13 +53,12 @@ async function updateRank(params) {
       item.className = "rank-item";
     });
     if (item?.username === curName) {
-      console.log("%c Line:55 🍭 item?.username", "color:#7f2b82", item?.username);
-      const myRank=document.getElementById("my-rank")
-      const myName=document.getElementById("my-name")
-      const myScore=document.getElementById("my-score")
-      myRank.textContent=`>>${index+1}`||0
-      myName.textContent=item?.username||"Bk9Mh梦想侠客"
-      myScore.textContent=item?.bestScore||0
+      const myRank = document.getElementById("my-rank");
+      const myName = document.getElementById("my-name");
+      const myScore = document.getElementById("my-score");
+      myRank.textContent = `>>${index + 1}` || 0;
+      myName.textContent = item?.username || "Bk9Mh梦想侠客";
+      myScore.textContent = item?.bestScore || 0;
       listNameDiv.className = "rank-item highlight";
     }
     elements[0].textContent = index + 1;
@@ -69,7 +69,7 @@ async function updateRank(params) {
     listScore.appendChild(listScoreDiv);
   });
 }
-document.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", async () => {
   //没有账号就自动注册一个并且返回他的名字，有的话就返回他的id和名字
   await getHistory();
   updateRank({ bestScore: maxInHistory });
@@ -135,6 +135,7 @@ function moveAddRandom(arr, map) {
   arr.push(gamingRandom[0]);
   map.set(gamingRandom[0], Number(firstRandomSquare.children[0].innerText));
 }
+const KEY_LIST = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 const THROTTLE_DELAY = 310; // 限制300ms内只执行一次
 document.addEventListener("keydown", (event) => {
   //节流函数
@@ -145,6 +146,9 @@ document.addEventListener("keydown", (event) => {
   lastKeyTime = now;
   // 获取按键信息
   const key = event.key; // 按键名称（如 "ArrowUp", "a", "Enter"）
+  if (!KEY_LIST.includes(key)) {
+    return;
+  }
   const beforeNums = []; //全局的索引值待会儿可以一封装成全局获取索引的一个函数
   const beforeMap = new Map();
   const afterMap = new Map();
