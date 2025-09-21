@@ -302,8 +302,8 @@ document.addEventListener("keydown", (event) => {
     }
     afterMoveNums.push(finalIndex);
     isAgrrate = false;
-    afterMap.delete(position);
-    afterMap.set(finalIndex, beforeVal);
+    afterMap.delete(position);//删除移动的索引
+    afterMap.set(finalIndex, beforeVal);//添加移动后的索引和值
   }
   //moveDistance是向上-4；向下+4；derection是向上还是向下
   function publicMoveFunc(moveDistance, derection) {

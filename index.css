@@ -1,5 +1,5 @@
-body{
-    margin: 0;
+body {
+  margin: 0;
 }
 .whole-back {
   background-image: url("pic/wholeback.png");
@@ -8,7 +8,6 @@ body{
   background-position: center; /* 背景图居中显示 */
   width: 100vw;
   height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,8 +42,8 @@ body{
 .rank-item {
   color: rgb(80, 5, 9);
 }
-.rank-item.highlight{
-     color: rgb(40, 12, 179);
+.rank-item.highlight {
+  color: rgb(40, 12, 179);
 }
 
 .list {
@@ -54,12 +53,12 @@ body{
   flex-direction: row;
   justify-content: space-around;
   margin-top: 20px;
+  overflow-y: auto;
+  height: 615px;
 }
 .list-common {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  height: 500px;
 }
 .whole {
   background-image: url("pic/gameWhole.png");
